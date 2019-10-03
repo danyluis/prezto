@@ -11,3 +11,46 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+[ -f ~/.alias ] && source ~/.alias
+[ -f ~/.functions ] && source ~/.functions
+
+# Smart change directory (cd)
+setopt autocd
+#unsetopt correct_all
+unsetopt correct
+cdpath=($HOME/code/fievel/money $HOME/code/fievel/money/uberpay/uberpay-service $HOME/code/uberpay-settlement/money/uberpay $HOME/code $HOME/tickets $HOME)
+
+# History management
+export HISTSIZE=100000
+export HISTFILESIZE=100000000
+export HISTCONTROL=erasedups
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/own/forgit/forgit.plugin.zsh ] && source ~/own/forgit/forgit.plugin.zsh
+[ -f ~/own/enhancd/init.sh ] && export ENHANCD_DISABLE_DOT=1 && export ENHANCD_DISABLE_HOME=1 && ENHANCD_HYPHEN_NUM=20 && source ~/own/enhancd/init.sh
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+#if command -v pyenv 1>/dev/null 2>&1; then
+#  eval "$(pyenv init -)"
+#fi
+
+export UBER_PYTHON=/usr/local/bin/python2.7
+export UBER_PIP=/usr/local/bin/pip2.7
+
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+export PYCURL_SSL_LIBRARY=openssl CFLAGS="-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib"
+
+#export PATH="/usr/local/opt/openssl/bin:/usr/local/opt/curl/bin:/usr/local/opt/sphinx-doc/bin:$PATH"
+
+#export JAVA_HOME=".;/Users/danyluis/.m2/repository/"
+#export CLASSPATH=".:/Users/danyluis/.m2/repository/"
+
+# SET UP some fzf goodies
+#[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# This makes fzf use rg to list the files when calling it without parameters (which is faster than letting fzf search files by itself)
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+# This doesn't work on Mac
+#bind -x '"\C-p": vim $(fzf);'

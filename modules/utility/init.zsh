@@ -114,10 +114,10 @@ else
 fi
 
 alias l='ls -1A'         # Lists in one column, hidden files.
-alias ll='ls -lh'        # Lists human readable sizes.
-alias lr='ll -R'         # Lists human readable sizes, recursively.
-alias la='ll -A'         # Lists human readable sizes, hidden files.
-alias lm='la | "$PAGER"' # Lists human readable sizes, hidden files through pager.
+alias ll='ls -lhAF'        # Lists human readable sizes.
+alias lr='ll -RF'         # Lists human readable sizes, recursively.
+alias la='ll -AF'         # Lists human readable sizes, hidden files.
+alias lm='laF | "$PAGER"' # Lists human readable sizes, hidden files through pager.
 alias lx='ll -XB'        # Lists sorted by extension (GNU only).
 alias lk='ll -Sr'        # Lists sorted by size, largest last.
 alias lt='ll -tr'        # Lists sorted by date, most recent last.
