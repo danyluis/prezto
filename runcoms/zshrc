@@ -18,7 +18,7 @@ fi
 setopt autocd
 #unsetopt correct_all
 unsetopt correct
-cdpath=($HOME/code/fievel/money $HOME/code/fievel/money/uberpay/uberpay-service $HOME/code/uberpay-settlement/money/uberpay $HOME/code $HOME/tickets $HOME)
+cdpath=($HOME/code $HOME/tickets $HOME)
 
 # History management
 export HISTSIZE=100000
@@ -34,23 +34,39 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 #  eval "$(pyenv init -)"
 #fi
 
-export UBER_PYTHON=/usr/local/bin/python2.7
-export UBER_PIP=/usr/local/bin/pip2.7
+# Compilation flags with OpenSSL
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+export LIBRARY_PATH=$LIBRARY_PATH:/usr/local/opt/openssl@1.1/lib/
 
-export LDFLAGS="-L/usr/local/opt/openssl/lib"
-export CPPFLAGS="-I/usr/local/opt/openssl/include"
-export PYCURL_SSL_LIBRARY=openssl CFLAGS="-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib"
+export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib $LDFLAGS"
+export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include $CPPFLAGS"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl@1.1/lib/pkgconfig:$PKG_CONFIG_PATH"
 
-#export PATH="/usr/local/opt/openssl/bin:/usr/local/opt/curl/bin:/usr/local/opt/sphinx-doc/bin:$PATH"
+# Compilation flags with mysql-client
+# export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+# export LDFLAGS="-L/usr/local/opt/mysql-client/lib $LDFLAGS"
+# export CPPFLAGS="-I/usr/local/opt/mysql-client/include $CPPFLAGS"
+# export PKG_CONFIG_PATH="/usr/local/opt/mysql-client/lib/pkgconfig:$PKG_CONFIG_PATH"
 
-#export JAVA_HOME=".;/Users/danyluis/.m2/repository/"
-#export CLASSPATH=".:/Users/danyluis/.m2/repository/"
+# export PYCURL_SSL_LIBRARY=openssl CFLAGS="-I/usr/local/opt/openssl/include -L/usr/local/opt/openssl/lib"
 
 # SET UP some fzf goodies
 #[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 # This makes fzf use rg to list the files when calling it without parameters (which is faster than letting fzf search files by itself)
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export H=$HOME
 
-# This doesn't work on Mac
-#bind -x '"\C-p": vim $(fzf);'
+# Java Environment
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+# Python Environment
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+export PATH="$HOME/.pyenv/bin:$PATH"
+
+#export PIP_INDEX_URL=https://dany.farina@glovoapp.com:AKCp5emFpvHGSweH4VTvzS5Sfa2gmxy7eDUqoaQDoUfeDx94tGMJa6PGVZ9nnS251z6eXQvqJ@artifactory.glovoint.com/artifactory/api/pypi/glovo-pypi/simple
+export PATH="/usr/local/opt/mysql-client/bin:$PATH"
+export PATH="$HOME/code/scripts:$PATH"
+  
