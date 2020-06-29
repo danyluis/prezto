@@ -30,9 +30,6 @@ export HISTCONTROL=erasedups
 [ -f ~/own/enhancd/init.sh ] && export ENHANCD_DISABLE_DOT=1 && export ENHANCD_DISABLE_HOME=1 && ENHANCD_HYPHEN_NUM=20 && source ~/own/enhancd/init.sh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-#if command -v pyenv 1>/dev/null 2>&1; then
-#  eval "$(pyenv init -)"
-#fi
 
 # OPENSSL Path and Compilation Flags
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
@@ -71,3 +68,7 @@ export PATH="$HOME/.pyenv/bin:$PATH"
 export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 export PATH="$HOME/code/scripts:$PATH"
   
+# Manage Node.js versions using nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
