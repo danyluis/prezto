@@ -130,4 +130,7 @@ ResultActive=yes' > ${POLKIT_FILE}
 
     sudo rm -f /var/crash/*
     fi
+
+    export SDKMAN_DIR="/home/danyluis/.sdkman"
+    [[ -s "/home/danyluis/.sdkman/bin/sdkman-init.sh" ]] && source "/home/danyluis/.sdkman/bin/sdkman-init.sh"
 fi
