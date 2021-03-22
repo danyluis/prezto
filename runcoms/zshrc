@@ -16,60 +16,73 @@ fi
 
 # Smart change directory (cd)
 setopt autocd
-#unsetopt correct_all
 unsetopt correct
-cdpath=($HOME/code/scripts $HOME/code $HOME/tickets $HOME)
+#unsetopt correct_all
+cdpath=(${HOME}/code/scripts ${HOME}/code ${HOME}/tickets ${HOME})
 
 # History management
 export HISTSIZE=100000
 export HISTFILESIZE=100000000
 export HISTCONTROL=erasedups
 
+# Allow zsh regex matching (=~)
+setopt REMATCH_PCRE
+
 # My local bin folder
-[[ ! -d ${HOME}/bin ]] && mkdir ${HOME}/bin
-export PATH=${HOME}/bin:$PATH
+[ ! -d "${HOME}/bin" ] && mkdir "${HOME}/bin"
+export PATH="${HOME}/bin":$PATH
 
 # Enable Fuzzy Finder
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/own/forgit/forgit.plugin.zsh ] && source ~/own/forgit/forgit.plugin.zsh
-[ -f ~/own/enhancd/init.sh ] && export ENHANCD_DISABLE_DOT=1 && export ENHANCD_DISABLE_HOME=1 && ENHANCD_HYPHEN_NUM=20 && source ~/own/enhancd/init.sh
-
-# FZF
 # This makes fzf use rg to list the files when calling it without parameters (which is faster than letting fzf search files by itself)
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!{.git,node_modules}/*" 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+# Enable forgit
+[ -f ~/own/forgit/forgit.plugin.zsh ] && source ~/own/forgit/forgit.plugin.zsh
+
+#Enable enhancd
+[ -f ~/own/enhancd/init.sh ] && export ENHANCD_DISABLE_DOT=1 && export ENHANCD_DISABLE_HOME=1 && ENHANCD_HYPHEN_NUM=20 && source ~/own/enhancd/init.sh
+
 # Java Environment
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
+if [ -f "${HOME}/.jenv/bin/jenv" ]
+then
+    export PATH="${HOME}/.jenv/bin:$PATH"
+    eval "$(jenv init -)"
+fi
 
 # Python Environment
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if [ -f "${HOME}/.pyenv/bin/pyenv" ]
+then
+    export PATH="${HOME}/.pyenv/bin:$PATH"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 
 # Manage Node.js versions using nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+if [ -d "${HOME}/.nvm" ]
+then
+    export NVM_DIR="${HOME}/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
 
 # Add GNUPG to PATH (GNU Privacy Guard)
 [ -s "/usr/local/opt/gpg" ] && export PATH=$PATH:/usr/local/opt
 
 # Ruby version Manager
-[ -d "$HOME/.rvm/bin" ] && export PATH=$PATH:"$HOME/.rvm/bin"
+[ -d "${HOME}/.rvm/bin" ] && export PATH=$PATH:"${HOME}/.rvm/bin"
 
 #The fuck -- command corrector
-eval $(thefuck --alias)
-
+[ -f "/usr/local/bin/thefuck" ] && eval $(thefuck --alias)
 
 #######################################################################################
 ############################             MAC OS            ############################
 #######################################################################################
-if [ "$(uname -v)" =~ "Darwin" ]
+if [[ "$(uname -v)" =~ "Darwin" ]]
 then
     # Iterm2 integration on MacOS
-    test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+    [ -e "${HOME}/.iterm2_shell_integration.zsh" ] && source "${HOME}/.iterm2_shell_integration.zsh"
 
     # OPENSSL Path and Compilation Flags
     export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
@@ -94,13 +107,13 @@ then
     export PATH="/usr/local/opt/mysql-client/bin:$PATH"
 
     # Glovo
-    export PATH="$HOME/code/scripts:$PATH"
+    export PATH="${HOME}/code/scripts:$PATH"
 fi
 
 #######################################################################################
 ############################             UBUNTU            ############################
 #######################################################################################
-if [ "$(uname -v)" =~ "Ubuntu" ]
+if [[ "$(uname -v)" =~ "Ubuntu" ]]
 then
     # Solve Ubuntu auth popup for Remote Desktop
     # FILE1='/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf'
@@ -118,19 +131,19 @@ then
     #  }
     #  });' > ${FILE1}
     # fi
-    POLKIT_FILE='/etc/polkit-1/localauthority/50-local.d/45-allow-colord.pkla'
-    if [[ ! -f ${POLKIT_FILE} ]]
-    then
-        sudo echo '[Allow Colord all Users]
-Identity=unix-user:*
-Action=org.freedesktop.color-manager.create-device;org.freedesktop.color-manager.create-profile;org.freedesktop.color-manager.delete-device;org.freedesktop.color-manager.delete-profile;org.freedesktop.color-manager.modify-device;org.freedesktop.color-manager.modify-profile
-ResultAny=no
-ResultInactive=no
-ResultActive=yes' > ${POLKIT_FILE}
+#    POLKIT_FILE='/etc/polkit-1/localauthority/50-local.d/45-allow-colord.pkla'
+#    if [[ ! -f ${POLKIT_FILE} ]]
+#    then
+#        sudo echo '[Allow Colord all Users]
+#Identity=unix-user:*
+#Action=org.freedesktop.color-manager.create-device;org.freedesktop.color-manager.create-profile;org.freedesktop.color-manager.delete-device;org.freedesktop.color-manager.delete-profile;org.freedesktop.color-manager.modify-device;org.freedesktop.color-manager.modify-profile
+#ResultAny=no
+#ResultInactive=no
+#ResultActive=yes' > ${POLKIT_FILE}#
 
-    sudo rm -f /var/crash/*
-    fi
+#    sudo rm -f /var/crash/*
+#    fi
 
-    export SDKMAN_DIR="/home/danyluis/.sdkman"
-    [[ -s "/home/danyluis/.sdkman/bin/sdkman-init.sh" ]] && source "/home/danyluis/.sdkman/bin/sdkman-init.sh"
+    export SDKMAN_DIR="${HOME}/.sdkman"
+    [ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ] && source "${HOME}/.sdkman/bin/sdkman-init.sh"
 fi
