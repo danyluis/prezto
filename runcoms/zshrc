@@ -26,7 +26,9 @@ export HISTFILESIZE=100000000
 export HISTCONTROL=erasedups
 
 # Allow zsh regex matching (=~)
-setopt REMATCH_PCRE
+# This option gave me problems in Mac OS
+# We just need to make sure to use [[ ]] 
+#setopt REMATCH_PCRE
 
 # My local bin folder
 [ ! -d "${HOME}/bin" ] && mkdir "${HOME}/bin"
@@ -150,3 +152,4 @@ then
         source "${HOME}/.sdkman/bin/sdkman-init.sh"
     fi
 fi
+
