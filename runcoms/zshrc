@@ -53,14 +53,6 @@ then
     eval "$(jenv init -)"
 fi
 
-# Python Environment
-if [ -f "${HOME}/.pyenv/bin/pyenv" ]
-then
-    export PATH="${HOME}/.pyenv/bin:$PATH"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-fi
-
 # Manage Node.js versions using nvm
 if [ -d "${HOME}/.nvm" ]
 then
@@ -77,6 +69,12 @@ fi
 
 #The fuck -- command corrector
 [ -f "/usr/local/bin/thefuck" ] && eval $(thefuck --alias)
+
+if [ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]
+then
+    export SDKMAN_DIR="${HOME}/.sdkman"
+    source "${HOME}/.sdkman/bin/sdkman-init.sh"
+fi
 
 #######################################################################################
 ############################             MAC OS            ############################
@@ -145,11 +143,5 @@ then
 
 #    sudo rm -f /var/crash/*
 #    fi
-
-    if [ -s "${HOME}/.sdkman/bin/sdkman-init.sh" ]
-    then
-        export SDKMAN_DIR="${HOME}/.sdkman"
-        source "${HOME}/.sdkman/bin/sdkman-init.sh"
-    fi
 fi
 
