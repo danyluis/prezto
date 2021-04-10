@@ -115,6 +115,8 @@ fi
 #######################################################################################
 if [[ "$(uname -v)" =~ "Ubuntu" ]]
 then
+    export LC_ALL=en_US.UTF-8
+    export LANG=en_US.UTF-8
 #    # Solve Ubuntu auth popup for Remote Desktop
 #    FILE1='/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf'
 #    if [[ ! -f @{FILE1} ]]
