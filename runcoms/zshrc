@@ -115,22 +115,22 @@ fi
 #######################################################################################
 if [[ "$(uname -v)" =~ "Ubuntu" ]]
 then
-    # Solve Ubuntu auth popup for Remote Desktop
-    # FILE1='/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf'
-    # if [[ ! -f @{FILE1} ]]
-    # then
-    #     sudo echo 'polkit.addRule(function(action, subject) {
-    #  if ((action.id == "org.freedesktop.color-manager.create-device" ||
-    #  action.id == "org.freedesktop.color-manager.create-profile" ||
-    #  action.id == "org.freedesktop.color-manager.delete-device" ||
-    #  action.id == "org.freedesktop.color-manager.delete-profile" ||
-    #  action.id == "org.freedesktop.color-manager.modify-device" ||
-    #  action.id == "org.freedesktop.color-manager.modify-profile") &&
-    #  subject.isInGroup("{users}")) {
-    #  return polkit.Result.YES;
-    #  }
-    #  });' > ${FILE1}
-    # fi
+#    # Solve Ubuntu auth popup for Remote Desktop
+#    FILE1='/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf'
+#    if [[ ! -f @{FILE1} ]]
+#    then
+#        sudo echo 'polkit.addRule(function(action, subject) {
+#if ((action.id == "org.freedesktop.color-manager.create-device" ||
+#action.id == "org.freedesktop.color-manager.create-profile" ||
+#action.id == "org.freedesktop.color-manager.delete-device" ||
+#action.id == "org.freedesktop.color-manager.delete-profile" ||
+#action.id == "org.freedesktop.color-manager.modify-device" ||
+#action.id == "org.freedesktop.color-manager.modify-profile") &&
+#subject.isInGroup("{users}")) {
+#return polkit.Result.YES;
+#}
+#});' > ${FILE1}
+#    fi
 #    POLKIT_FILE='/etc/polkit-1/localauthority/50-local.d/45-allow-colord.pkla'
 #    if [[ ! -f ${POLKIT_FILE} ]]
 #    then
@@ -140,7 +140,7 @@ then
 #ResultAny=no
 #ResultInactive=no
 #ResultActive=yes' > ${POLKIT_FILE}#
-
+#
 #    sudo rm -f /var/crash/*
 #    fi
 fi
