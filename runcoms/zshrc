@@ -117,7 +117,8 @@ if [[ "$(uname -v)" =~ "Ubuntu" ]]
 then
     export LC_ALL=en_US.UTF-8
     export LANG=en_US.UTF-8
-#    # Solve Ubuntu auth popup for Remote Desktop
+
+    # Solve Ubuntu auth popup for Remote Desktop
 #    FILE1='/etc/polkit-1/localauthority.conf.d/02-allow-colord.conf'
 #    if [[ ! -f @{FILE1} ]]
 #    then
@@ -142,8 +143,7 @@ then
 #ResultAny=no
 #ResultInactive=no
 #ResultActive=yes' > ${POLKIT_FILE}#
-#
-#    sudo rm -f /var/crash/*
+#        sudo rm -f /var/crash/*
 #    fi
 fi
 
